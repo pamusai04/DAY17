@@ -1,0 +1,16 @@
+//problem  3
+//2.Use the date class in data to print time in the following format  ex :- 21 : 47: 02
+//3.Repeat 2 using the calendar class	
+
+import java.util.Calendar;
+
+class DAY17_PQ3 {
+	public static void main(String[] args) {
+   		public static void main(String[] args) {
+    		Calendar c=Calendar.getInstance();
+    		System.out.println(c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE) +":" + c.get(Calendar.SECOND));
+    
+  }
+		
+	}
+}

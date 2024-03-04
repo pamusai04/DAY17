@@ -1,0 +1,25 @@
+//problem  1
+
+//1.Create an ArrayList and store names of 10 students inside it print it using a for each loop
+	
+
+import java.util.*;
+
+class DAY17_PQ1 {
+public static void main(String[] args) {
+    ArrayList<String> ar = new ArrayList<>();
+    ar.add("Student 1");
+    ar.add("Student 2");
+    ar.add("Student 3");
+    ar.add("Student 4");
+    ar.add("Student 5");
+    ar.add("Student 6");
+    ar.add("Student 7");
+    ar.add("Student 8");
+    ar.add("Student 9");
+    ar.add("Student 10");
+    for(Object o:ar){
+      System.out.println(o);
+    }
+}
+}

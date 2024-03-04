@@ -1,0 +1,12 @@
+//problem  2
+//2.Use the date class in data to print time in the following format  ex :- 21 : 47: 02
+
+import java.util.*;
+
+class DAY17_PQ2 {
+	public static void main(String[] args) {
+		Date d=new Date();
+		System.out.println(d.getHours() + ":" + d.getMinutes() +":" + d.getSeconds());	
+
+	}
+}

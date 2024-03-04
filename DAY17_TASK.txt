@@ -1,0 +1,207 @@
+//problem task
+
+/* a library maagement system which is capable of issuing books to the students 
+   book should have info like :
+	1.book name
+	2.book Author
+	3.Issued to
+	4.Issued on 
+	User should be able to add books, return issued books,issue books
+	Assume that all the users are registered with their names in the central database 
+*/
+
+
+// import static org.junit.jupiter.api.Assertions.assertEquals;
+
+// import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+class Book {
+    private String name;
+    private String author;
+    private String issuedTo;
+    private String issuedOn;
+
+    public Book(String name, String author) {
+        this.name = name;
+        this.author = author;
+        this.issuedTo = null;
+        this.issuedOn = null;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getIssuedTo() {
+        return issuedTo;
+    }
+
+    public String getIssuedOn() {
+        return issuedOn;
+    }
+
+    public void issueBook(String studentName, String issueDate) {
+        this.issuedTo = studentName;
+        this.issuedOn = issueDate;
+    }
+
+    public void returnBook() {
+        this.issuedTo = null;
+        this.issuedOn = null;
+    }
+
+    @Override
+    public String toString() {
+        return "Book: " + name + ", Author: " + author
+                + ", Issued To: " + (issuedTo != null ? issuedTo : "Not Issued")
+                + ", Issued On: " + (issuedOn != null ? issuedOn : "Not Issued");
+    }
+}
+
+public class DAY17_TASK {
+  private static Map<Integer, Book> bookInventory = new HashMap<>();
+  private static ArrayList<String> registeredUsers = new ArrayList<>();
+
+  public static void main(String[] args) {
+      Scanner scanner = new Scanner(System.in);
+
+      while (true) {
+          System.out.println("\nLibrary Management System");
+          System.out.println("1. Add Book");
+          System.out.println("2. Issue Book");
+          System.out.println("3. Return Book");
+          System.out.println("4. Display Book Inventory");
+          System.out.println("5. Exit");
+          System.out.print("Enter your choice: ");
+
+          int choice = scanner.nextInt();
+          scanner.nextLine(); // Consume the newline character
+
+          switch (choice) {
+              case 1:
+                  addBook(scanner);
+                  break;
+              case 2:
+                  issueBook(scanner);
+                  break;
+              case 3:
+                  returnBook(scanner);
+                  break;
+              case 4:
+                  displayInventory();
+                  break;
+              case 5:
+                  System.out.println("Exiting Library Management System. Goodbye!");
+                  System.exit(0);
+              default:
+                  System.out.println("Invalid choice. Please enter a valid option.");
+          }
+      }
+  }
+
+  private static void addBook(Scanner scanner) {
+      System.out.print("Enter Book Name: ");
+      String bookName = scanner.nextLine();
+
+      System.out.print("Enter Author Name: ");
+      String authorName = scanner.nextLine();
+
+      Book book = new Book(bookName, authorName);
+      bookInventory.put(bookInventory.size() + 1, book);
+      System.out.println("Book added successfully to the inventory.");
+  }
+
+  private static void issueBook(Scanner scanner) {
+      if (bookInventory.isEmpty()) {
+          System.out.println("No books available in the inventory.");
+          return;
+      }
+
+      System.out.print("Enter Student Name: ");
+      String studentName = scanner.nextLine();
+
+      if (!registeredUsers.contains(studentName)) {
+          System.out.println("Student not registered in the central database. Please register first.");
+          return;
+      }
+
+      System.out.println("Available Books:");
+      displayInventory();
+
+      System.out.print("Enter the Book Number to Issue: ");
+      int bookNumber = scanner.nextInt();
+      scanner.nextLine(); // Consume the newline character
+
+      Book selectedBook = bookInventory.get(bookNumber);
+      if (selectedBook != null && selectedBook.getIssuedTo() == null) {
+          System.out.print("Enter Issue Date (e.g., DD-MM-YYYY): ");
+          String issueDate = scanner.nextLine();
+
+          selectedBook.issueBook(studentName, issueDate);
+          System.out.println("Book issued successfully.");
+      } else {
+          System.out.println("Invalid book selection. The book is either not available or already issued.");
+      }
+  }
+
+  private static void returnBook(Scanner scanner) {
+      if (bookInventory.isEmpty()) {
+          System.out.println("No books available in the inventory.");
+          return;
+      }
+
+      System.out.print("Enter Student Name: ");
+      String studentName = scanner.nextLine();
+
+      if (!registeredUsers.contains(studentName)) {
+          System.out.println("Student not registered in the central database. Please register first.");
+          return;
+      }
+
+      System.out.println("Issued Books:");
+      displayIssuedBooks();
+
+      System.out.print("Enter the Book Number to Return: ");
+      int bookNumber = scanner.nextInt();
+      scanner.nextLine(); // Consume the newline character
+
+      Book selectedBook = bookInventory.get(bookNumber);
+      if (selectedBook != null && selectedBook.getIssuedTo() != null
+              && selectedBook.getIssuedTo().equals(studentName)) {
+          selectedBook.returnBook();
+          System.out.println("Book returned successfully.");
+      } else {
+          System.out.println("Invalid book selection. The book is either not issued to the specified student or not available.");
+      }
+  }
+
+  private static void displayInventory() {
+      for (Map.Entry<Integer, Book> entry : bookInventory.entrySet()) {
+          System.out.println(entry.getKey() + ". " + entry.getValue());
+      }
+  }
+
+  private static void displayIssuedBooks() {
+      for (Map.Entry<Integer, Book> entry : bookInventory.entrySet()) {
+          Book book = entry.getValue();
+          if (book.getIssuedTo() != null) {
+              System.out.println(entry.getKey() + ". " + book);
+          }
+      }
+  }
+
+  // @Test
+  // void addition() {
+  //     assertEquals(2, 1 + 1);
+  // }
+}
+

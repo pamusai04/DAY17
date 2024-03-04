@@ -1,0 +1,21 @@
+//problem  4
+//2.Use the date class in data to print time in the following format  ex :- 21 : 47: 02
+//4.Repeat 2 using the java.time API
+
+	
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+
+class DAY17_PQ4 {
+	public static void main(String[] args) {
+		public static void main(String[] args) {
+    		LocalDateTime dt = LocalDateTime.now(); // This is the date
+    		DateTimeFormatter df = DateTimeFormatter.ofPattern("H:m:s"); // this is the format
+
+    		String myDate = dt.format(df); // creating date String using date and format
+    		System.out.println(myDate);
+  }
+	}
+}
